@@ -43,6 +43,7 @@ const Home: React.FC = () => {
                 productImages={productImages.map((img) => img.src)}
               />
             </div>
+
             {/* Form Section (right) */}
             <div className="w-full md:w-1/2 p-6">
               <Form />
@@ -50,19 +51,14 @@ const Home: React.FC = () => {
           </div>
 
           {/* Reversed Layout: Description (left) & Image Gallery (right) */}
-          <div
-            className="flex flex-col md:flex-row items-start mb-12"
-          >
+          <div className="flex flex-col md:flex-row items-start mb-12 space-y-8 md:space-y-0 md:space-x-6">
             {/* Product Description (left) */}
-            <div
-              className="w-full md:w-1/2 p-6 flex flex-col justify-between bg-white"
-            >
+            <div className="w-full md:w-1/2 p-6 flex flex-col justify-between bg-white">
               <ProductDescription />
             </div>
+
             {/* Image Gallery (right) */}
-            <div
-              className="w-full md:w-1/2 p-6 flex justify-center items-center bg-gray-100"
-            >
+            <div className="w-full md:w-1/2 p-6 flex justify-center items-center bg-gray-100 shadow-lg rounded-lg">
               <ImageGallery />
             </div>
           </div>
