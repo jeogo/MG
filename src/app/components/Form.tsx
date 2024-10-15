@@ -45,9 +45,9 @@ const Form: React.FC = () => {
   };
 
   return (
-    <div className="w-full  ">
-      <form className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="w-full p-4">
+      <form className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <InputField label="الاسم" placeholder="أدخل اسمك" />
           <InputField label="اللقب" placeholder="أدخل لقبك" />
         </div>
@@ -85,7 +85,7 @@ const Form: React.FC = () => {
           setSelectedColor={setSelectedColor}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
           <InputField
             label="الكمية"
             type="number"
@@ -116,9 +116,9 @@ interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => (
   <label className="block">
-    <span className="text-gray-700 font-semibold">{label}</span>
+    <span className="text-sm text-gray-600 font-medium">{label}</span>
     <input
-      className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition duration-150 ease-in-out"
+      className="w-full p-2 mt-1 border border-gray-300 rounded focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-150 ease-in-out text-sm"
       {...props}
     />
   </label>
@@ -136,9 +136,9 @@ const SelectField: React.FC<SelectFieldProps> = ({
   ...props
 }) => (
   <label className="block">
-    <span className="text-gray-700 font-semibold">{label}</span>
+    <span className="text-sm text-gray-600 font-medium">{label}</span>
     <select
-      className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition duration-150 ease-in-out"
+      className="w-full p-2 mt-1 border border-gray-300 rounded focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-150 ease-in-out text-sm"
       {...props}
     >
       <option value="">{`اختر ${label}`}</option>
@@ -161,8 +161,10 @@ const ColorSelection: React.FC<ColorSelectionProps> = ({
   setSelectedColor,
 }) => (
   <fieldset>
-    <legend className="text-gray-700 font-semibold mb-2">اختر اللون</legend>
-    <div className="grid grid-cols-5 gap-4">
+    <legend className="text-sm text-gray-600 font-medium mb-2">
+      اختر اللون
+    </legend>
+    <div className="grid grid-cols-5 gap-2">
       {colorOptions.map(({ name, value }) => (
         <label key={value} className="flex flex-col items-center">
           <input
@@ -173,14 +175,14 @@ const ColorSelection: React.FC<ColorSelectionProps> = ({
             className="sr-only"
           />
           <div
-            className={`w-12 h-12 rounded-full border-2 cursor-pointer transition-transform ${
+            className={`w-10 h-10 rounded-full border cursor-pointer transition-transform ${
               selectedColor === value
                 ? "border-blue-500 scale-110 ring-2 ring-blue-300"
                 : "border-gray-300 hover:border-gray-400"
             }`}
             style={{ backgroundColor: value }}
           />
-          <span className="mt-1 text-sm text-gray-600">{name}</span>
+          <span className="mt-1 text-xs text-gray-500">{name}</span>
         </label>
       ))}
     </div>
@@ -192,21 +194,18 @@ interface PriceDisplayProps {
 }
 
 const PriceDisplay: React.FC<PriceDisplayProps> = ({ price }) => (
-  <div className=" p-4  ">
-    <span className="text-gray-700 font-semibold block mb-1">
-      السعر الإجمالي
-    </span>
-    <span className="text-2xl font-bold text-green-600">{price} دج</span>
+  <div className="text-center">
+    <span className="text-sm text-gray-600 font-medium">السعر الإجمالي</span>
+    <p className="text-xl font-bold text-green-500 mt-1">{price} دج</p>
   </div>
 );
 
 const SubmitButton: React.FC = () => (
   <button
     type="submit"
-    className="w-full p-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out transform hover:-translate-y-1 active:translate-y-0"
+    className="w-full p-3 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out text-sm"
   >
-    <span className="text-lg font-semibold">إرسال الطلب</span>
-    <span className="block text-sm mt-1">اضغط هنا لإكمال عملية الشراء</span>
+    <span className="font-medium">إرسال الطلب</span>
   </button>
 );
 

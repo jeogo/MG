@@ -13,19 +13,18 @@ const images = [product1, product2, product3, product4, product5, product6];
 
 const ImageGallery: React.FC = () => {
   return (
-    <div className="w-full p-4 flex justify-center items-center">
-      {/* Responsive grid for images */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
+    <div className="w-full p-0 flex justify-center items-center">
+      <div className="grid grid-cols-2 gap-0 w-full">
         {images.map((src, index) => (
           <div
             key={index}
-            className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] flex justify-center items-center bg-white border rounded-lg"
+            className="relative w-full h-[150px] sm:h-[200px] md:h-[250px] overflow-hidden"
           >
             <Image
               src={src}
               alt={`Gallery Image ${index + 1}`}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-contain w-full h-full"
+              className="object-cover w-full h-full"
             />
           </div>
         ))}
