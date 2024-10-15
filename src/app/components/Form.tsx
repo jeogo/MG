@@ -118,7 +118,7 @@ const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => (
   <label className="block">
     <span className="text-sm text-gray-600 font-medium">{label}</span>
     <input
-      className="w-full p-2 mt-1 border border-gray-300 rounded focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-150 ease-in-out text-sm"
+      className="w-full p-2 mt-1 border border-gray-300 rounded focus:border-pink-500 focus:ring focus:ring-pink-200 transition duration-150 ease-in-out text-sm"
       {...props}
     />
   </label>
@@ -130,15 +130,11 @@ interface SelectFieldProps
   options: { value: string; label: string }[];
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({
-  label,
-  options,
-  ...props
-}) => (
+const SelectField: React.FC<SelectFieldProps> = ({ label, options, ...props }) => (
   <label className="block">
     <span className="text-sm text-gray-600 font-medium">{label}</span>
     <select
-      className="w-full p-2 mt-1 border border-gray-300 rounded focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-150 ease-in-out text-sm"
+      className="w-full p-2 mt-1 border border-gray-300 rounded focus:border-pink-500 focus:ring focus:ring-pink-200 transition duration-150 ease-in-out text-sm"
       {...props}
     >
       <option value="">{`اختر ${label}`}</option>
@@ -161,9 +157,7 @@ const ColorSelection: React.FC<ColorSelectionProps> = ({
   setSelectedColor,
 }) => (
   <fieldset>
-    <legend className="text-sm text-gray-600 font-medium mb-2">
-      اختر اللون
-    </legend>
+    <legend className="text-sm text-gray-600 font-medium mb-2">اختر اللون</legend>
     <div className="grid grid-cols-5 gap-2">
       {colorOptions.map(({ name, value }) => (
         <label key={value} className="flex flex-col items-center">
@@ -177,7 +171,7 @@ const ColorSelection: React.FC<ColorSelectionProps> = ({
           <div
             className={`w-10 h-10 rounded-full border cursor-pointer transition-transform ${
               selectedColor === value
-                ? "border-blue-500 scale-110 ring-2 ring-blue-300"
+                ? "border-pink-500 scale-110 ring-2 ring-pink-300"
                 : "border-gray-300 hover:border-gray-400"
             }`}
             style={{ backgroundColor: value }}
@@ -196,14 +190,14 @@ interface PriceDisplayProps {
 const PriceDisplay: React.FC<PriceDisplayProps> = ({ price }) => (
   <div className="text-center">
     <span className="text-sm text-gray-600 font-medium">السعر الإجمالي</span>
-    <p className="text-xl font-bold text-green-500 mt-1">{price} دج</p>
+    <p className="text-xl font-bold text-pink-600 mt-1">{price} دج</p>
   </div>
 );
 
 const SubmitButton: React.FC = () => (
   <button
     type="submit"
-    className="w-full p-3 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out text-sm"
+    className="w-full p-3 bg-pink-500 text-white rounded-md hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 transition duration-150 ease-in-out text-sm transform hover:-translate-y-1 active:translate-y-0"
   >
     <span className="font-medium">إرسال الطلب</span>
   </button>
