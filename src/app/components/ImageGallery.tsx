@@ -1,49 +1,33 @@
-// components/ImageGallery.tsx
 import React from "react";
+import Image from "next/image";
 
-const images = [
-  "/images/product1.jpg",
-  "/images/product2.jpg",
-  "/images/product3.jpg",
-  "/images/product4.jpg",
-  "/images/product5.jpg",
-  "/images/product6.jpg",
-];
+// Import images
+import product1 from "../images/product1.jpg";
+import product2 from "../images/product2.jpg";
+import product3 from "../images/product3.jpg";
+import product4 from "../images/product4.jpg";
+import product5 from "../images/product5.jpg";
+import product6 from "../images/product6.jpg";
+
+const images = [product1, product2, product3, product4, product5, product6];
 
 const ImageGallery: React.FC = () => {
   return (
     <div className="w-full p-4 flex justify-center items-center">
-      <div className="grid grid-cols-2 gap-4">
-        {/* First column */}
-        <div className="flex flex-col space-y-4">
-          {images.slice(0, 3).map((src, index) => (
-            <div
-              key={index}
-              className="relative w-[300px] h-[300px] overflow-hidden flex justify-center items-center"
-            >
-              <img
-                src={src}
-                alt={`Gallery Image ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-        {/* Second column */}
-        <div className="flex flex-col space-y-4">
-          {images.slice(3, 6).map((src, index) => (
-            <div
-              key={index}
-              className="relative w-[300px] h-[300px] overflow-hidden flex justify-center items-center"
-            >
-              <img
-                src={src}
-                alt={`Gallery Image ${index + 4}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {images.map((src, index) => (
+          <div
+            key={index}
+            className="relative w-full h-[200px] sm:h-[250px] md:h-[300px] overflow-hidden "
+          >
+            <Image
+              src={src}
+              alt={`Gallery Image ${index + 1}`}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover "
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

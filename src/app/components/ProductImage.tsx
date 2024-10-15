@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface ProductImageProps {
   selectedProduct: string;
@@ -15,9 +16,11 @@ const ProductImage: React.FC<ProductImageProps> = ({
     <div className="w-full flex flex-col items-center space-y-6">
       {/* Main product image */}
       <div className="relative w-full aspect-square overflow-hidden rounded-xl shadow-lg transition-transform transform hover:scale-105">
-        <img
+        <Image
           src={selectedProduct}
           alt="Main Product"
+          height={500}
+          width={500}
           className="object-cover w-full h-full rounded-xl"
         />
       </div>
@@ -32,10 +35,12 @@ const ProductImage: React.FC<ProductImageProps> = ({
             }`}
             onClick={() => setSelectedProduct(image)}
           >
-            <img
+            <Image
               src={image}
               alt={`Product ${index + 1}`}
-              className="w-full h-full object-cover rounded-lg"
+              width={80}
+              height={80}
+              className="object-cover rounded-lg"
             />
           </div>
         ))}
