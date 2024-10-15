@@ -21,17 +21,18 @@ const ProductImage: React.FC<ProductImageProps> = ({
           alt="Main Product"
           height={500}
           width={500}
+          priority
           className="object-cover w-full h-full rounded-xl"
         />
       </div>
 
-      {/* Small product boxes */}
-      <div className="flex justify-center items-center gap-4 w-full">
+      {/* Small product thumbnails */}
+      <div className="flex justify-center items-center gap-2 w-full">
         {productImages.map((image, index) => (
           <div
             key={index}
-            className={`w-16 h-16 sm:w-20 sm:h-20 cursor-pointer hover:opacity-80 transition-all rounded-lg shadow-md overflow-hidden flex-shrink-0 ${
-              selectedProduct === image ? "ring-2 ring-blue-500" : ""
+            className={`w-16 h-16 sm:w-20 sm:h-20 cursor-pointer hover:opacity-80 transition-all rounded-lg shadow-md overflow-hidden flex-shrink-0 border-2 ${
+              selectedProduct === image ? "border-blue-500" : "border-gray-200"
             }`}
             onClick={() => setSelectedProduct(image)}
           >
