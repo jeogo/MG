@@ -1,10 +1,15 @@
 import React from "react";
 import Image from "next/image";
 
+interface Product {
+  src: string;
+  name: string;
+}
+
 interface ProductImageProps {
-  selectedProduct: string;
-  setSelectedProduct: (image: string) => void;
-  productImages: string[];
+  selectedProduct: Product;
+  setSelectedProduct: (product: Product) => void;
+  productImages: Product[];
 }
 
 const ProductImage: React.FC<ProductImageProps> = ({
@@ -17,8 +22,8 @@ const ProductImage: React.FC<ProductImageProps> = ({
       {/* Main product image */}
       <div className="relative w-full aspect-square overflow-hidden rounded-xl shadow-lg transition-transform transform hover:scale-105">
         <Image
-          src={selectedProduct}
-          alt="Main Product"
+          src={selectedProduct.src}
+          alt={selectedProduct.name}
           height={500}
           width={500}
           priority
@@ -32,13 +37,15 @@ const ProductImage: React.FC<ProductImageProps> = ({
           <div
             key={index}
             className={`w-16 h-16 sm:w-20 sm:h-20 cursor-pointer hover:opacity-80 transition-all rounded-lg shadow-md overflow-hidden flex-shrink-0 border-2 ${
-              selectedProduct === image ? "border-blue-500" : "border-gray-200"
+              selectedProduct.src === image.src
+                ? "border-blue-500"
+                : "border-gray-200"
             }`}
             onClick={() => setSelectedProduct(image)}
           >
             <Image
-              src={image}
-              alt={`Product ${index + 1}`}
+              src={image.src}
+              alt={image.name}
               width={80}
               height={80}
               className="object-cover rounded-lg"

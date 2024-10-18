@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import communesData from "../data/communes.json";
-import { FaShoppingCart, FaPhoneAlt } from "react-icons/fa"; // Icons for enhanced visual appeal
+import { FaShoppingCart, FaPhoneAlt, FaInfoCircle } from "react-icons/fa";
+import communesData from "../data/communes.json"; // Adjust the path as necessary
+
+interface Product {
+  src: string;
+  name: string;
+}
 
 interface Commune {
   id: number;
@@ -13,26 +18,16 @@ interface Commune {
   wilaya_name: string;
 }
 
-interface ColorOption {
-  name: string;
-  value: string;
+interface FormProps {
+  selectedProduct: Product;
 }
-
-const colorOptions: ColorOption[] = [
-  { name: "أحمر", value: "red" },
-  { name: "أخضر", value: "green" },
-  { name: "أزرق", value: "blue" },
-  { name: "أصفر", value: "yellow" },
-  { name: "برتقالي", value: "orange" },
-];
 
 const price: number = 100;
 
-const Form: React.FC = () => {
+const Form: React.FC<FormProps> = ({ selectedProduct }) => {
   const [selectedWilayaCode, setSelectedWilayaCode] = useState<string>("");
   const [selectedCommune, setSelectedCommune] = useState<string>("");
   const [communes, setCommunes] = useState<Commune[]>([]);
-  const [selectedColor, setSelectedColor] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
 
   const handleWilayaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -46,13 +41,12 @@ const Form: React.FC = () => {
   };
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full p-6 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg shadow-lg">
       <form className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <InputField label="الاسم" placeholder="أدخل اسمك" />
-          <InputField label="اللقب" placeholder="أدخل لقبك" />
-        </div>
+        {/* Full Name Field */}
+        <InputField label="الاسم الكامل" placeholder="أدخل اسمك الكامل" />
 
+        {/* Wilaya Selection */}
         <SelectField
           label="الولاية"
           value={selectedWilayaCode}
@@ -68,6 +62,7 @@ const Form: React.FC = () => {
           }))}
         />
 
+        {/* Commune Selection */}
         <SelectField
           label="البلدية"
           value={selectedCommune}
@@ -81,11 +76,7 @@ const Form: React.FC = () => {
           disabled={communes.length === 0}
         />
 
-        <ColorSelection
-          selectedColor={selectedColor}
-          setSelectedColor={setSelectedColor}
-        />
-
+        {/* Quantity and Price */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
           <InputField
             label="الكمية"
@@ -99,6 +90,14 @@ const Form: React.FC = () => {
           <PriceDisplay price={price * quantity} />
         </div>
 
+        {/* Selected Product Display */}
+        <div className="text-sm text-gray-700 mt-4">
+          <FaInfoCircle className="inline-block text-blue-500 mr-2" />
+          <span>تم اختيار هذا المنتج:</span>{" "}
+          <strong className="text-blue-600">{selectedProduct.name}</strong>
+        </div>
+
+        {/* Phone Number Field */}
         <InputField
           label="رقم الهاتف"
           type="tel"
@@ -106,20 +105,22 @@ const Form: React.FC = () => {
           icon={<FaPhoneAlt className="text-pink-500" />}
         />
 
+        {/* Submit Button */}
         <SubmitButton />
       </form>
     </div>
   );
 };
 
+// Input field component
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  icon?: React.ReactNode; // Optional icon prop for additional flair
+  icon?: React.ReactNode;
 }
 
 const InputField: React.FC<InputFieldProps> = ({ label, icon, ...props }) => (
   <label className="block">
-    <span className="text-sm text-gray-600 font-medium">{label}</span>
+    <span className="text-sm text-purple-700 font-medium">{label}</span>
     <div className="relative mt-1">
       {icon && (
         <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -127,95 +128,60 @@ const InputField: React.FC<InputFieldProps> = ({ label, icon, ...props }) => (
         </span>
       )}
       <input
-        className={`w-full p-3 pl-10 border border-gray-300 rounded focus:border-pink-500 focus:ring focus:ring-pink-200 transition duration-150 ease-in-out text-sm ${
+        className={`w-full p-3 ${
           icon ? "pl-10" : ""
-        }`}
+        } border border-purple-300 rounded focus:border-purple-500 focus:ring focus:ring-purple-200 transition duration-150 ease-in-out text-sm bg-white text-purple-900`}
         {...props}
       />
     </div>
   </label>
 );
 
-interface SelectFieldProps
-  extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  label: string;
-  options: { value: string; label: string }[];
-}
-
-const SelectField: React.FC<SelectFieldProps> = ({
+// Select field component
+const SelectField = ({
   label,
   options,
-  ...props
+  value,
+  onChange,
+  disabled,
+}: {
+  label: string;
+  options: { value: string; label: string }[];
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  disabled?: boolean;
 }) => (
   <label className="block">
-    <span className="text-sm text-gray-600 font-medium">{label}</span>
+    <span className="text-sm text-purple-700 font-medium">{label}</span>
     <select
-      className="w-full p-3 mt-1 border border-gray-300 rounded focus:border-pink-500 focus:ring focus:ring-pink-200 transition duration-150 ease-in-out text-sm"
-      {...props}
+      className="w-full p-3 mt-1 border border-purple-300 rounded focus:border-purple-500 focus:ring focus:ring-purple-200 transition duration-150 ease-in-out text-sm bg-white text-purple-900"
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
     >
       <option value="">{`اختر ${label}`}</option>
-      {options.map((option) => (
+      {options.map((option,index) => (
         <option key={option.value} value={option.value}>
-          {option.label}
+        {index+1} - {option.label}
         </option>
       ))}
     </select>
   </label>
 );
 
-interface ColorSelectionProps {
-  selectedColor: string;
-  setSelectedColor: (color: string) => void;
-}
-
-const ColorSelection: React.FC<ColorSelectionProps> = ({
-  selectedColor,
-  setSelectedColor,
-}) => (
-  <fieldset>
-    <legend className="text-sm text-gray-600 font-medium mb-2">
-      اختر اللون
-    </legend>
-    <div className="grid grid-cols-5 gap-2">
-      {colorOptions.map(({ name, value }) => (
-        <label key={value} className="flex flex-col items-center">
-          <input
-            type="radio"
-            value={value}
-            checked={selectedColor === value}
-            onChange={() => setSelectedColor(value)}
-            className="sr-only"
-          />
-          <div
-            className={`w-8 h-8 rounded-full border cursor-pointer transition-transform ${
-              selectedColor === value
-                ? "border-pink-500 scale-110 ring-2 ring-pink-400 shadow-lg"
-                : "border-gray-300 hover:border-gray-400"
-            }`}
-            style={{ backgroundColor: value }}
-          />
-          <span className="mt-1 text-xs text-gray-500">{name}</span>
-        </label>
-      ))}
-    </div>
-  </fieldset>
-);
-
-interface PriceDisplayProps {
-  price: number;
-}
-
-const PriceDisplay: React.FC<PriceDisplayProps> = ({ price }) => (
+// Price display component
+const PriceDisplay = ({ price }: { price: number }) => (
   <div className="text-center">
-    <span className="text-sm text-gray-600 font-medium">السعر الإجمالي</span>
-    <p className="text-2xl font-bold text-pink-600 mt-1">{price} دج</p>
+    <span className="text-sm text-purple-600 font-medium">السعر الإجمالي</span>
+    <p className="text-3xl font-bold text-purple-600 mt-1">{price} دج</p>
   </div>
 );
 
+// Submit button component
 const SubmitButton: React.FC = () => (
   <button
     type="submit"
-    className="w-full py-3 bg-gradient-to-r from-pink-500 to-pink-400 text-white rounded-lg shadow-lg hover:from-pink-600 hover:to-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-400 transition duration-150 ease-in-out text-base font-semibold flex items-center justify-center space-x-2 transform hover:-translate-y-1 active:translate-y-0"
+    className="w-full py-3 bg-gradient-to-r from-purple-600 to-purple-500 text-white rounded-lg shadow-lg hover:from-purple-700 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 transition duration-150 ease-in-out text-base font-semibold flex items-center justify-center space-x-2 transform hover:-translate-y-1 active:translate-y-0"
   >
     <FaShoppingCart />
     <span>إرسال الطلب</span>

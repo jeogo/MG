@@ -15,11 +15,25 @@ import product3 from "./images/product3.jpg";
 import product4 from "./images/product4.jpg";
 import product5 from "./images/product5.jpg";
 
-// Array of product images
-const productImages = [product1, product2, product3, product4, product5];
+// Define the shape of each product (image and model name)
+interface Product {
+  src: string;
+  name: string;
+}
+
+// Array of product images with model names
+const productImages: Product[] = [
+  { src: product1.src, name: "Model 1" },
+  { src: product2.src, name: "Model 2" },
+  { src: product3.src, name: "Model 3" },
+  { src: product4.src, name: "Model 4" },
+  { src: product5.src, name: "Model 5" },
+];
 
 const Home: React.FC = () => {
-  const [selectedProduct, setSelectedProduct] = useState(productImages[0]);
+  const [selectedProduct, setSelectedProduct] = useState<Product>(
+    productImages[0]
+  );
 
   return (
     <div className="min-h-screen w-full bg-white flex flex-col">
@@ -34,19 +48,15 @@ const Home: React.FC = () => {
             {/* Product Image (left) */}
             <div className="w-full md:w-1/2 p-6">
               <ProductImage
-                selectedProduct={selectedProduct.src}
-                setSelectedProduct={(image) =>
-                  setSelectedProduct(
-                    productImages.find((img) => img.src === image)!
-                  )
-                }
-                productImages={productImages.map((img) => img.src)}
+                selectedProduct={selectedProduct}
+                setSelectedProduct={setSelectedProduct}
+                productImages={productImages}
               />
             </div>
 
             {/* Form Section (right) */}
             <div className="w-full md:w-1/2 p-6">
-              <Form />
+              <Form selectedProduct={selectedProduct} />
             </div>
           </div>
 
